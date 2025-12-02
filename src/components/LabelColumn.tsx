@@ -68,6 +68,7 @@ export default function LabelColumn({
       className={`bg-white rounded-lg border border-gray-200 transition-all ${
         isCollapsed ? "p-2" : "p-4 min-w-[220px] max-w-[250px]"
       }`}
+      style={{ position: "sticky", top: "1rem", alignSelf: "flex-start" }}
     >
       <div className="flex items-center justify-between mb-3">
         {!isCollapsed && (

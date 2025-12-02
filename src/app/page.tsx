@@ -214,14 +214,14 @@ export default function Home() {
     clients: Client[];
     scrollRef: React.RefObject<HTMLDivElement | null>;
   }) => (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex-1">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex-1 flex flex-col max-h-[75vh]">
       <div className="bg-linear-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-200">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-gray-800">{title}</h2>
         </div>
       </div>
 
-      <div className="p-6 space-y-3" ref={scrollRef}>
+      <div className="p-6 space-y-3 overflow-y-auto flex-1" ref={scrollRef}>
         {clients.map((client) => (
           <ClientRow
             key={client.id}
@@ -255,8 +255,8 @@ export default function Home() {
   });
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100">
-      <div className="max-w-[2000px] mx-auto p-8">
+    <div className="h-screen bg-linear-to-br overflow-hidden from-gray-50 to-gray-100">
+      <div className="max-w-[2000px] mx-auto p-8 h-full">
         {/* Prominent Date Display */}
         <div className="mb-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-lg p-8 text-white">
           <div className="flex items-center justify-between">
@@ -277,7 +277,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex gap-6">
+        <div className="flex gap-6 h-full">
           <LabelColumn
             labels={data.labels}
             category="content"
