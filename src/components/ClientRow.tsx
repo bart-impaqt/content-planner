@@ -121,7 +121,7 @@ export default function ClientRow({
       {/* Client Name Header - Always Visible */}
       <div className="flex items-center py-2 px-3 bg-gray-50 rounded-lg border justify-between w-full border-gray-200">
         <div className="flex items-center gap-3">
-          <span className="text-sm font-medium text-gray-700 truncate">
+          <span className="text-lg font-medium text-gray-700 truncate">
             {client.name}
           </span>
           <button
@@ -150,7 +150,7 @@ export default function ClientRow({
         {recentStatus && (
           <div className="flex items-center gap-2">
             <div
-              className="px-3 py-1 rounded-md text-sm font-medium flex items-center gap-2"
+              className="px-3 py-1 rounded-md text-lg font-medium flex items-center gap-2"
               style={{
                 backgroundColor: recentStatus.weekData.color,
                 border: `2px solid ${recentStatus.weekData.color}`,

@@ -72,7 +72,7 @@ export default function LabelColumn({
     >
       <div className="flex items-center justify-between mb-3">
         {!isCollapsed && (
-          <h3 className="text-sm font-semibold text-gray-700 capitalize">
+          <h3 className="text-lg font-semibold text-gray-700 capitalize">
             {category} Labels
           </h3>
         )}
@@ -128,7 +128,7 @@ export default function LabelColumn({
                 className="w-4 h-4 rounded shrink-0"
                 style={{ backgroundColor: label.color }}
               />
-              <span className="text-sm text-gray-700 flex-1 truncate">
+              <span className="text-lg text-gray-700 flex-1 truncate">
                 {label.name}
               </span>
               <div className="flex gap-1">

@@ -113,7 +113,7 @@ export default function WeekBox({
     <>
       <div className="relative">
         <button
-          className={`w-20 h-12 rounded-t-lg border-2 border-b-0 flex items-center justify-center text-base font-medium transition-colors active:scale-95 relative ${getBorderColor()}`}
+          className={`w-32 h-18 rounded-t-lg border-2 border-b-0 flex items-center justify-center text-2xl font-medium transition-colors active:scale-95 relative ${getBorderColor()}`}
           style={{ backgroundColor: color || "#f3f4f6", ...borderStyle }}
           onClick={handleTap}
           onTouchStart={handleTouchStart}
@@ -134,10 +134,10 @@ export default function WeekBox({
         <button
           onClick={handleNoteClick}
           style={{ backgroundColor: color || "#f3f4f6", ...borderStyle }}
-          className={`w-20 h-8 text-xs bg-gray-100 active:bg-gray-200 text-gray-600 rounded-b-lg border-2 border-t-0 flex items-center justify-center gap-1 ${getBorderColor()}`}
+          className={`w-32 h-12 text-lg bg-gray-100 active:bg-gray-200 text-gray-600 rounded-b-lg border-2 border-t-0 flex items-center justify-center gap-1 ${getBorderColor()}`}
         >
           <svg
-            className="w-3 h-3"
+            className="w-4 h-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
