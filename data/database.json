@@ -1,0 +1,256 @@
+{
+  "labels": [
+    {
+      "id": "2",
+      "name": "INGEFLAND",
+      "color": "#93c5fd",
+      "category": "music"
+    },
+    {
+      "id": "4",
+      "name": "COPYWRITER",
+      "color": "#fdba74",
+      "category": "music"
+    }
+  ],
+  "tables": {
+    "content": {
+      "clients": [
+        {
+          "id": "c1",
+          "name": "HEMA FR",
+          "labelId": "1",
+          "weeks": {
+            "2024-47": {
+              "color": "",
+              "note": ""
+            },
+            "2024-48": {
+              "color": "",
+              "note": ""
+            },
+            "2025-47": {
+              "color": "",
+              "note": "Example"
+            },
+            "2025-50": {
+              "color": "",
+              "note": ""
+            },
+            "2025-48": {
+              "color": "",
+              "note": ""
+            },
+            "2026-05": {
+              "color": "",
+              "note": ""
+            },
+            "2025-49": {
+              "color": "",
+              "note": ""
+            },
+            "2026-04": {
+              "color": "",
+              "note": ""
+            }
+          }
+        },
+        {
+          "id": "c2",
+          "name": "HEMA Horeca",
+          "labelId": "1",
+          "weeks": {
+            "2024-47": {
+              "color": "",
+              "note": ""
+            },
+            "2024-48": {
+              "color": "",
+              "note": ""
+            },
+            "2025-47": {
+              "color": "",
+              "note": ""
+            },
+            "2025-50": {
+              "color": "",
+              "note": ""
+            },
+            "2025-49": {
+              "color": "",
+              "note": ""
+            }
+          }
+        },
+        {
+          "id": "c3",
+          "name": "HEMA NL/BENL/BEFR",
+          "labelId": "1",
+          "weeks": {
+            "2024-47": {
+              "color": "",
+              "note": ""
+            },
+            "2024-48": {
+              "color": "",
+              "note": ""
+            },
+            "2024-49": {
+              "color": "#fdba74",
+              "note": ""
+            },
+            "2024-50": {
+              "color": "#fdba74",
+              "note": ""
+            },
+            "2025-48": {
+              "color": "",
+              "note": ""
+            }
+          }
+        },
+        {
+          "id": "c4",
+          "name": "HEMA DE",
+          "labelId": "1",
+          "weeks": {
+            "2024-47": {
+              "color": "",
+              "note": ""
+            },
+            "2024-48": {
+              "color": "",
+              "note": ""
+            }
+          }
+        },
+        {
+          "id": "c5",
+          "name": "Holland & Barrett",
+          "labelId": "3",
+          "weeks": {
+            "2024-47": {
+              "color": "",
+              "note": ""
+            },
+            "2024-48": {
+              "color": "#fdba74",
+              "note": ""
+            },
+            "2024-49": {
+              "color": "#fdba74",
+              "note": ""
+            },
+            "2024-50": {
+              "color": "#fdba74",
+              "note": ""
+            }
+          }
+        }
+      ]
+    },
+    "music": {
+      "clients": [
+        {
+          "id": "m1",
+          "name": "Albert Heijn",
+          "labelId": "4",
+          "weeks": {
+            "2024-48": {
+              "color": "#93c5fd",
+              "note": ""
+            },
+            "2025-47": {
+              "color": "",
+              "note": ""
+            },
+            "2025-50": {
+              "color": "",
+              "note": ""
+            },
+            "2025-52": {
+              "color": "",
+              "note": ""
+            }
+          }
+        },
+        {
+          "id": "m2",
+          "name": "Etos",
+          "labelId": "2",
+          "weeks": {
+            "2024-48": {
+              "color": "#93c5fd",
+              "note": ""
+            },
+            "2024-49": {
+              "color": "",
+              "note": ""
+            },
+            "2024-51": {
+              "color": "",
+              "note": ""
+            }
+          }
+        },
+        {
+          "id": "m3",
+          "name": "HEMA NL",
+          "labelId": "2",
+          "weeks": {
+            "2024-47": {
+              "color": "",
+              "note": ""
+            },
+            "2024-48": {
+              "color": "",
+              "note": ""
+            },
+            "2024-49": {
+              "color": "",
+              "note": ""
+            },
+            "2024-50": {
+              "color": "",
+              "note": ""
+            }
+          }
+        },
+        {
+          "id": "m4",
+          "name": "Praxis",
+          "labelId": "2",
+          "weeks": {
+            "2024-47": {
+              "color": "",
+              "note": ""
+            },
+            "2024-48": {
+              "color": "",
+              "note": ""
+            },
+            "2025-50": {
+              "color": "",
+              "note": ""
+            }
+          }
+        },
+        {
+          "id": "m5",
+          "name": "Dirk van den Broek",
+          "labelId": "2",
+          "weeks": {
+            "2024-47": {
+              "color": "",
+              "note": ""
+            },
+            "2024-48": {
+              "color": "",
+              "note": ""
+            }
+          }
+        }
+      ]
+    }
+  }
+}
