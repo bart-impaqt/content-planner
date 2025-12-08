@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Database, Client, TableType } from "@/types";
+import { Database, Client, TableType, Label } from "@/types";
 import ClientRow from "@/components/ClientRow";
 import LabelColumn from "@/components/LabelColumn";
 import AddClientButton from "@/components/AddClientButton";
@@ -11,6 +11,76 @@ import {
   getCurrentWeek,
   getCurrentYear,
 } from "@/utils/weekUtils";
+
+interface TableSectionProps {
+  title: string;
+  tableType: TableType;
+  clients: Client[];
+  labels: Label[];
+  weekKeys: string[];
+  currentWeekKey: string;
+  scrollRef: React.RefObject<HTMLDivElement | null>;
+  updateWeek: (
+    tableType: TableType,
+    clientId: string,
+    weekKey: string,
+    color?: string,
+    note?: string
+  ) => void;
+  deleteClient: (tableType: TableType, clientId: string) => void;
+  updateClient: (
+    tableType: TableType,
+    clientId: string,
+    name: string
+  ) => void;
+  addClient: (tableType: TableType, name: string) => void;
+}
+
+function TableSection({
+  title,
+  tableType,
+  clients,
+  labels,
+  weekKeys,
+  currentWeekKey,
+  scrollRef,
+  updateWeek,
+  deleteClient,
+  updateClient,
+  addClient,
+}: TableSectionProps) {
+  return (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex-1 flex flex-col max-h-[75vh]">
+      <div className="bg-linear-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-200">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold text-gray-800">{title}</h2>
+        </div>
+      </div>
+
+      <div className="p-6 space-y-3 overflow-y-auto flex-1" ref={scrollRef}>
+        {clients.map((client) => (
+          <ClientRow
+            key={client.id}
+            client={client}
+            labels={labels}
+            weekKeys={weekKeys}
+            currentWeekKey={currentWeekKey}
+            tableType={tableType}
+            onWeekUpdate={(clientId, weekKey, color, note) =>
+              updateWeek(tableType, clientId, weekKey, color, note)
+            }
+            onDelete={(clientId) => deleteClient(tableType, clientId)}
+            onUpdateName={(clientId, name) =>
+              updateClient(tableType, clientId, name)
+            }
+          />
+        ))}
+
+        <AddClientButton onAdd={(name) => addClient(tableType, name)} />
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const [data, setData] = useState<Database | null>(null);
@@ -70,12 +140,48 @@ export default function Home() {
     color?: string,
     note?: string
   ) => {
+    // Optimistically update local state so the whole UI
+    // doesn't feel like it "refreshes" on each click.
+    setData((prev) => {
+      if (!prev) return prev;
+
+      const table = prev.tables[tableType];
+      const clientIndex = table.clients.findIndex((c) => c.id === clientId);
+      if (clientIndex === -1) return prev;
+
+      const client = table.clients[clientIndex];
+      const weeks = { ...client.weeks };
+      const currentWeek = weeks[weekKey] || { color: "", note: "" };
+
+      const updatedWeek = {
+        ...currentWeek,
+        ...(color !== undefined ? { color } : {}),
+        ...(note !== undefined ? { note } : {}),
+      };
+
+      weeks[weekKey] = updatedWeek;
+
+      const updatedClient = { ...client, weeks };
+      const updatedClients = [...table.clients];
+      updatedClients[clientIndex] = updatedClient;
+
+      return {
+        ...prev,
+        tables: {
+          ...prev.tables,
+          [tableType]: {
+            ...table,
+            clients: updatedClients,
+          },
+        },
+      };
+    });
+
     await fetch("/api/week", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ tableType, clientId, weekKey, color, note }),
     });
-    loadData();
   };
 
   const addClient = async (tableType: TableType, name: string) => {
@@ -203,48 +309,6 @@ export default function Home() {
     );
   }
 
-  const TableSection = ({
-    title,
-    tableType,
-    clients,
-    scrollRef,
-  }: {
-    title: string;
-    tableType: TableType;
-    clients: Client[];
-    scrollRef: React.RefObject<HTMLDivElement | null>;
-  }) => (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex-1 flex flex-col max-h-[75vh]">
-      <div className="bg-linear-to-r from-blue-50 to-indigo-50 px-6 py-4 border-b border-gray-200">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-gray-800">{title}</h2>
-        </div>
-      </div>
-
-      <div className="p-6 space-y-3 overflow-y-auto flex-1" ref={scrollRef}>
-        {clients.map((client) => (
-          <ClientRow
-            key={client.id}
-            client={client}
-            labels={data.labels}
-            weekKeys={weekKeys}
-            currentWeekKey={currentWeekKey}
-            tableType={tableType}
-            onWeekUpdate={(clientId, weekKey, color, note) =>
-              updateWeek(tableType, clientId, weekKey, color, note)
-            }
-            onDelete={(clientId) => deleteClient(tableType, clientId)}
-            onUpdateName={(clientId, name) =>
-              updateClient(tableType, clientId, name)
-            }
-          />
-        ))}
-
-        <AddClientButton onAdd={(name) => addClient(tableType, name)} />
-      </div>
-    </div>
-  );
-
   // Get today's date information
   const today = new Date();
   const dateString = today.toLocaleDateString("en-US", {
@@ -291,6 +355,13 @@ export default function Home() {
             tableType="content"
             clients={data.tables.content.clients}
             scrollRef={contentScrollRef}
+            labels={data.labels}
+            weekKeys={weekKeys}
+            currentWeekKey={currentWeekKey}
+            updateWeek={updateWeek}
+            deleteClient={deleteClient}
+            updateClient={updateClient}
+            addClient={addClient}
           />
 
           <TableSection
@@ -298,6 +369,13 @@ export default function Home() {
             tableType="music"
             clients={data.tables.music.clients}
             scrollRef={musicScrollRef}
+            labels={data.labels}
+            weekKeys={weekKeys}
+            currentWeekKey={currentWeekKey}
+            updateWeek={updateWeek}
+            deleteClient={deleteClient}
+            updateClient={updateClient}
+            addClient={addClient}
           />
 
           <LabelColumn
