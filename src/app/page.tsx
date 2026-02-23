@@ -88,6 +88,7 @@ export default function Home() {
   const [weekKeys, setWeekKeys] = useState<string[]>([]);
   const contentScrollRef = useRef<HTMLDivElement>(null);
   const musicScrollRef = useRef<HTMLDivElement>(null);
+  const weekUpdateQueueRef = useRef<Promise<void>>(Promise.resolve());
   const [dismissedToasts, setDismissedToasts] = useState<Set<string>>(
     new Set()
   );
@@ -177,11 +178,23 @@ export default function Home() {
       };
     });
 
-    await fetch("/api/week", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tableType, clientId, weekKey, color, note }),
-    });
+    weekUpdateQueueRef.current = weekUpdateQueueRef.current
+      .catch((error) => {
+        console.error("Previous week update failed:", error);
+      })
+      .then(async () => {
+        const response = await fetch("/api/week", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tableType, clientId, weekKey, color, note }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to persist week update");
+        }
+      });
+
+    await weekUpdateQueueRef.current;
   };
 
   const addClient = async (tableType: TableType, name: string) => {
